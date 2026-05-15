@@ -258,7 +258,6 @@ export default function StreakTracker() {
           {minutesAgo === 0 ? "Updated just now" : `Updated ${minutesAgo} min ago`}
         </p>
       )}
-      </div>
 
       {!freezeLoading && freeze?.hasFreeze && (
         <div className="mt-4 flex items-center justify-between rounded-lg border border-[var(--accent)]/30 bg-[var(--accent-soft)] px-4 py-3">
