@@ -22,22 +22,21 @@ export default function TopRepos() {
     fetch(`/api/metrics/repos?days=${days}`)
       .then((r) => r.json())
       .then((d: { repos: Repo[] }) => setRepos(d.repos ?? []))
-      .catch(() => {})
+      .catch(() => setError("We couldn't load your top repositories right now. Please try again in a moment."))
       .finally(() => {
         setLoading(false);
         setLastUpdated(new Date());
         setMinutesAgo(0);
       });
-      .catch(() => setError("We couldn't load your top repositories right now. Please try again in a moment."))
-      .finally(() => setLoading(false));
   }, [days]);
+
   useEffect(() => {
-   if (!lastUpdated) return;
-   const interval = setInterval(() => {
-     const diff = Math.floor((Date.now() - lastUpdated.getTime()) / 60000);
-     setMinutesAgo(diff);
+    if (!lastUpdated) return;
+    const interval = setInterval(() => {
+      const diff = Math.floor((Date.now() - lastUpdated.getTime()) / 60000);
+      setMinutesAgo(diff);
     }, 60000);
-   return () => clearInterval(interval);
+    return () => clearInterval(interval);
   }, [lastUpdated]);
 
 

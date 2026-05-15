@@ -56,26 +56,24 @@ export default function ContributionGraph() {
 
         setData(sorted);
       })
-      .catch(() => {})
-      .finally(() => {
-       setLoading(false);
-       setLastUpdated(new Date());
-       setMinutesAgo(0);
-      });
-      }, [days]);
-      useEffect(() => {
-       if (!lastUpdated) return;
-       const interval= setInterval(() => {
-        const diff= Math.floor((Date.now()-lastUpdated.getTime())/60000);
-        setMinutesAgo(diff);
-       }, 60000);
-       return ()=> clearInterval(interval);
-      }, [lastUpdated]);
       .catch(() => {
         setError("Failed to load contribution data.");
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        setLastUpdated(new Date());
+        setMinutesAgo(0);
+      });
   }, [days]);
+
+  useEffect(() => {
+    if (!lastUpdated) return;
+    const interval = setInterval(() => {
+      const diff = Math.floor((Date.now() - lastUpdated.getTime()) / 60000);
+      setMinutesAgo(diff);
+    }, 60000);
+    return () => clearInterval(interval);
+  }, [lastUpdated]);
 
   return (
     <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">

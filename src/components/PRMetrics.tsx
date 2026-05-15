@@ -14,7 +14,6 @@ export default function PRMetrics() {
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [minutesAgo, setMinutesAgo] = useState(0);
-  useEffect(() => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchMetrics = () => {
@@ -27,14 +26,12 @@ export default function PRMetrics() {
         return r.json();
       })
       .then((data: PRData) => setMetrics(data))
-      .catch(() => {})
+      .catch(() => setError("We couldn't load your PR analytics right now. Please try again in a moment."))
       .finally(() => {
         setLoading(false);
         setLastUpdated(new Date());
         setMinutesAgo(0);
-    });
-      .catch(() => setError("We couldn't load your PR analytics right now. Please try again in a moment."))
-      .finally(() => setLoading(false));
+      });
   };
 
   useEffect(() => {

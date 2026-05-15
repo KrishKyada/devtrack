@@ -35,8 +35,6 @@ export default function GoalTracker() {
         setLastUpdated(new Date());
         setMinutesAgo(0);
       });
-  }, []);
-      .finally(() => setLoading(false));
   }, [loadGoals]);
 
   async function handleCreate(e: React.FormEvent) {

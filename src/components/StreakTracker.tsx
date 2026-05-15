@@ -56,6 +56,8 @@ export default function StreakTracker() {
       setError("We couldn't load your streak data right now. Please try again in a moment.");
     } finally {
       setLoading(false);
+      setLastUpdated(new Date());
+      setMinutesAgo(0);
     }
   };
 
@@ -63,13 +65,6 @@ export default function StreakTracker() {
     setFreezeLoading(true);
     fetch("/api/streak/freeze")
       .then((r) => r.json())
-      .then((d: StreakData) => setData(d))
-      .catch(() => {})
-      .finally(() => {
-        setLoading(false);
-        setLastUpdated(new Date());
-        setMinutesAgo(0);
-      });
       .then((d: FreezeData) => setFreeze(d))
       .catch(() => setFreeze(null))
       .finally(() => setFreezeLoading(false));
